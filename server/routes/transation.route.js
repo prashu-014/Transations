@@ -1,8 +1,8 @@
 const express = require('express')
+const router = express.Router()
 
 const transationData = require('../controller/transation.controller')
 
-const router = express.Router()
 
 router.route("/").get(transationData)
 

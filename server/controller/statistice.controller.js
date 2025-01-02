@@ -1,4 +1,3 @@
-const connectDB = require("../config/dbConnection");
 const transations = require('../models/transation.model')
 
 async function getStatasticsByMonth(req, res) {
@@ -11,7 +10,6 @@ async function getStatasticsByMonth(req, res) {
     }
 
     try {
-        connectDB()
         const transactions = await transations.find(
             {
                 $expr: {

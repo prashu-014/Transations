@@ -1,15 +1,17 @@
-const connectDB = require("../config/dbConnection");
 const Transations = require("../models/transation.model");
 
 async function getTransactionsByMonth(req, res) {
-  const { month } = req.body; 
+  const { month } = req.body;
+
+  if (!month) {
+    return res.status(400).send("not found data...")
+  }
 
   try {
-    connectDB()
     const transactions = await Transations.find({
-        $expr: {
-            $eq: [{ $month: { $dateFromString: { dateString: "$dateOfSale" } } }, month],
-          },
+      $expr: {
+        $eq: [{ $month: { $dateFromString: { dateString: "$dateOfSale" } } }, month],
+      },
     });
 
     if (transactions.length === 0) {

@@ -3,6 +3,8 @@ const express = require('express')
 const app = express();
 const transationRouter = require("./routes/transation.route");
 const statasticsRouter = require("./routes/statistics.route");
+const barChartRouter = require("./routes/barChartData.route");
+const connectDB = require('./config/dbConnection');
 
 app.use(express.json())
 
@@ -15,9 +17,15 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/transation',transationRouter)
 app.use('/api/v1/statastics',statasticsRouter)
+app.use('/api/v1/barchart',barChartRouter)
 
-app.listen(port, () => {
-  console.log(`server running....${port}`);
+connectDB().then(()=>{
+  app.listen(port, () => {
+    console.log(`server running....${port}`);
+  })
+}).catch((error)=>{
+  console.log(error);
+  
 })
 
 
