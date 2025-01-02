@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 const express = require('express')
 const app = express();
 const transationRouter = require("./routes/transation.route");
+const statasticsRouter = require("./routes/statistics.route");
 
 app.use(express.json())
 
@@ -13,6 +14,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1/transation',transationRouter)
+app.use('/api/v1/statastics',statasticsRouter)
 
 app.listen(port, () => {
   console.log(`server running....${port}`);
