@@ -1,11 +1,14 @@
 const dotenv = require('dotenv');
 const express = require('express')
 const app = express();
+const cors = require('cors')
 const transationRouter = require("./routes/transation.route");
 const statasticsRouter = require("./routes/statistics.route");
 const barChartRouter = require("./routes/barChartData.route");
+const allTransationRouter = require("./routes/allTransaction.route");
 const connectDB = require('./config/dbConnection');
 
+app.use(cors())
 app.use(express.json())
 
 dotenv.config();
@@ -18,6 +21,7 @@ app.get('/', (req, res) => {
 app.use('/api/v1/transation',transationRouter)
 app.use('/api/v1/statastics',statasticsRouter)
 app.use('/api/v1/barchart',barChartRouter)
+app.use('/api/v1/alltransation',allTransationRouter)
 
 connectDB().then(()=>{
   app.listen(port, () => {
