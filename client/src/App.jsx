@@ -1,30 +1,20 @@
 import "./App.css";
 import Transation from "./pages/Transation";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom"; // Fix the imports
+import Statistics from "./pages/Statistics";
+import NotFound from "./pages/NotFound";
+import Barchart from "./pages/Barchart";
 
 function App() {
-  const [isAllTransation, setIsAllTransation] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5002/api/v1/alltransation")
-      .then((response) => {
-        const data = response.data.transation;
-        setIsAllTransation(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data", error);
-      });
-  }, []);
-
   return (
-    <>
-      <Transation
-        isAllTransation={isAllTransation}
-        setIsAllTransation={setIsAllTransation}
-      />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Transation />} />
+        <Route path="/statistics" element={<Statistics />} />
+        <Route path="/barchart" element={<Barchart />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
