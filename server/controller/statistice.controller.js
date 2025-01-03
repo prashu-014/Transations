@@ -2,8 +2,8 @@ const transations = require('../models/transation.model')
 
 async function getStatasticsByMonth(req, res) {
 
-
-    const { month } = req.body;
+    const { month } = req.query;
+    const monthNumber = parseInt(month, 10);
 
     if (!month) {
         return res.status(400).send("not found data...")
@@ -13,7 +13,7 @@ async function getStatasticsByMonth(req, res) {
         const transactions = await transations.find(
             {
                 $expr: {
-                    $eq: [{ $month: { $dateFromString: { dateString: "$dateOfSale" } } }, month],
+                    $eq: [{ $month: { $dateFromString: { dateString: "$dateOfSale" } } }, monthNumber],
                 },
             }
 
@@ -23,7 +23,7 @@ async function getStatasticsByMonth(req, res) {
             id: transaction.id,
             price: transaction.price,
             dateOfSale: transaction.dateOfSale,
-            sale: transaction.sale
+            sale: transaction.sold
         }));
 
         res.status(200).json(filteredData)
