@@ -2,20 +2,25 @@ import React, { useState } from "react";
 import SelectDropdown from "../components/SelectDropdown";
 import BarChartComponent from "../components/BarChartComponent";
 import fetchApi from "../helper/fetchApi";
-
+import { toast } from "react-toastify";
 
 const Barchart = () => {
-const [isBarchartData,setIsBarchartData] = useState([])
+  const [isBarchartData,setIsBarchartData] = useState([])
 
   async function handleChange(e) {
     const monthID = e.target.value
 
     if (monthID) {
       try {
-        const data = await fetchApi(`http://localhost:5002/api/v1/barchart?month=${monthID}`);
-        setIsBarchartData(data.transactions)        
+        const data = await fetchApi(`http://localhost:5002/api/v1/barchart?month=${monthID}`);        
+        setIsBarchartData(data.transactions)
+        toast.success(`Records fetch..`, {
+          position: "top-right",
+        });
       } catch (error) {
-        console.error("Error fetching filtered data", error);
+        toast.error(`Data Not Found..${error.message}`, {
+          position: "top-right",
+        });
       }
     }
   }

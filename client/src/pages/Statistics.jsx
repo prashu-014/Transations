@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SelectDropdown from "../components/SelectDropdown";
 
 import fetchApi from "../helper/fetchApi";
+import {toast} from 'react-toastify'
 
 const Statistics = () => {
   const [isTotalsale, setIsTotalsale] = useState([]);
@@ -19,6 +20,9 @@ const Statistics = () => {
         );
         console.log(data);
         setIsTotalsale(data);
+        toast.success(`( ${data.length}) Records fetch..`, {
+                  position: "top-right"
+                });
       } catch (error) {
         console.error("Error fetching filtered data", error);
       }

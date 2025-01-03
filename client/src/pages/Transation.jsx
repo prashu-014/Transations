@@ -5,9 +5,9 @@ import axios from "axios";
 import SelectDropdown from "../components/SelectDropdown";
 import fetchApi from "../helper/fetchApi";
 import InputSearch from "../components/InputSearch";
+import { toast } from "react-toastify";
 
 const Transation = () => {
-  const [isSelectValue, setIsSelectValue] = useState(0);
   const [originalTransactions, setOriginalTransactions] = useState([]); // Store original data
   const [isAllTransation, setIsAllTransation] = useState([]);
 
@@ -32,28 +32,35 @@ const Transation = () => {
       .get("http://localhost:5002/api/v1/alltransation")
       .then((response) => {
         const data = response.data.transation;
-        setOriginalTransactions(data); 
+        setOriginalTransactions(data);
         setIsAllTransation(data);
       })
       .catch((error) => {
-        console.error("Error fetching data", error);
+        toast.error("Data Not Found..", {
+          position: "top-right",
+        });
       });
   }, []);
 
   async function handleChange(e) {
-    const monthID = e.target.value
+    const monthID = e.target.value;
 
     if (monthID) {
       try {
         const data = await fetchApi(`http://localhost:5002/api/v1/transation?month=${monthID}`);
         setIsAllTransation(data);
-        setCurrentPage(1); 
+        setCurrentPage(1);
+        toast.success(`( ${data.length}) Records fetch..`, {
+          position: "top-right",
+        });
       } catch (error) {
-        console.error("Error fetching filtered data", error);
+        toast.error(`Data Not Found..${error.message}`, {
+          position: "top-right",
+        });
       }
     } else {
-      setIsAllTransation(originalTransactions); 
-      setCurrentPage(1); 
+      setIsAllTransation(originalTransactions);
+      setCurrentPage(1);
     }
   }
 
@@ -64,7 +71,11 @@ const Transation = () => {
       </header>
 
       <section className="flex justify-between">
-       <InputSearch  setIsAllTransation={setIsAllTransation} originalTransactions={originalTransactions} setCurrentPage={setCurrentPage}/>
+        <InputSearch
+          setIsAllTransation={setIsAllTransation}
+          originalTransactions={originalTransactions}
+          setCurrentPage={setCurrentPage}
+        />
         <SelectDropdown handleChange={handleChange} />
       </section>
       <br />

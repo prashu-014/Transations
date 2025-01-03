@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const InputSearch = ({setIsAllTransation,setCurrentPage,originalTransactions}) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,10 +28,14 @@ const InputSearch = ({setIsAllTransation,setCurrentPage,originalTransactions}) =
           `http://localhost:5002/api/v1/transactionSearch?search=${debouncedSearchTerm}`
         );
         setIsAllTransation(response.data);
-        console.log(response.data);
+        toast.success(`( ${response.data.length}) Records fetch..`, {
+          position: "top-right"
+        });
         
       } catch (error) {
-        console.error("Error fetching search results:", error);
+        toast.error(`Data Not Found..`, {
+          position: "top-right"
+        });
       }
     };
 
@@ -41,7 +46,7 @@ const InputSearch = ({setIsAllTransation,setCurrentPage,originalTransactions}) =
       type="text"
       name="search"
       id=""
-      className="w-52 px-2"
+      className="w-52 px-2 focus:outline-none"
       placeholder="search..."
       autoComplete="off"
       onChange={(e) => setSearchTerm(e.target.value)}
