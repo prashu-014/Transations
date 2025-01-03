@@ -6,6 +6,7 @@ const transationRouter = require("./routes/transation.route");
 const statasticsRouter = require("./routes/statistics.route");
 const barChartRouter = require("./routes/barChartData.route");
 const allTransationRouter = require("./routes/allTransaction.route");
+const transactionSearchRouter = require("./routes/transactionSearch.route");
 const connectDB = require('./config/dbConnection');
 
 app.use(cors())
@@ -22,6 +23,7 @@ app.use('/api/v1/transation',transationRouter)
 app.use('/api/v1/statastics',statasticsRouter)
 app.use('/api/v1/barchart',barChartRouter)
 app.use('/api/v1/alltransation',allTransationRouter)
+app.use('/api/v1/transactionSearch',transactionSearchRouter)
 
 connectDB().then(()=>{
   app.listen(port, () => {

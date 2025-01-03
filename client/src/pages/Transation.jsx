@@ -4,6 +4,7 @@ import PaginationButtons from "../components/PaginationButtons";
 import axios from "axios";
 import SelectDropdown from "../components/SelectDropdown";
 import fetchApi from "../helper/fetchApi";
+import InputSearch from "../components/InputSearch";
 
 const Transation = () => {
   const [isSelectValue, setIsSelectValue] = useState(0);
@@ -63,14 +64,7 @@ const Transation = () => {
       </header>
 
       <section className="flex justify-between">
-        <input
-          type="text"
-          name="search"
-          id=""
-          className="w-52 px-2"
-          placeholder="search..."
-          autoComplete="off"
-        />
+       <InputSearch  setIsAllTransation={setIsAllTransation} originalTransactions={originalTransactions} setCurrentPage={setCurrentPage}/>
         <SelectDropdown handleChange={handleChange} />
       </section>
       <br />
