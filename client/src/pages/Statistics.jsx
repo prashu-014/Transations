@@ -4,6 +4,8 @@ import SelectDropdown from "../components/SelectDropdown";
 import fetchApi from "../helper/fetchApi";
 import {toast} from 'react-toastify'
 
+import Piechart from "../components/Piechart";
+
 const Statistics = () => {
   const [isTotalsale, setIsTotalsale] = useState([]);
   async function handleDropdown(e) {
@@ -53,7 +55,8 @@ const Statistics = () => {
         <SelectDropdown handleChange={handleDropdown} />
       </div>
 
-      <div className="bg-blue-700 p-4 mt-2 ms-4 rounded-lg text-white grid grid-cols-2 gap-10 w-2/5 text-xl font-bold cursor-pointer">
+      <article className="grid grid-cols-1 gap-8 md:gap-4">
+      <div className="bg-blue-700 p-4 mt-2 ms-4 rounded-lg text-white grid grid-cols-2 gap-5 text-xl font-bold cursor-pointer">
         <h1>Total sale :-</h1>
         <h1> &#8377; {totalprice}</h1>
         <h1>Total sold item :-</h1>
@@ -61,6 +64,8 @@ const Statistics = () => {
         <h1>Total not sold item :-</h1>
         <h1>{totalItemNotSold.length}</h1>
       </div>
+      <Piechart />
+      </article>
     </div>
   );
 };
