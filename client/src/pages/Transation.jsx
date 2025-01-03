@@ -1,11 +1,13 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import TableContent from "../components/TableContent";
 import PaginationButtons from "../components/PaginationButtons";
 import axios from "axios";
 import SelectDropdown from "../components/SelectDropdown";
+import fetchApi from "../helper/fetchApi";
 
 const Transation = () => {
   const [isSelectValue, setIsSelectValue] = useState(0);
+  const [originalTransactions, setOriginalTransactions] = useState([]); // Store original data
   const [isAllTransation, setIsAllTransation] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,7 +17,6 @@ const Transation = () => {
   //last page number
   const totalPage = isAllTransation.length / rowsPerPage;
   const currentItems = isAllTransation.slice(indexOfFirstItem, indexOfLastItem);
-
 
   const handleNext = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPage));
@@ -30,6 +31,7 @@ const Transation = () => {
       .get("http://localhost:5002/api/v1/alltransation")
       .then((response) => {
         const data = response.data.transation;
+        setOriginalTransactions(data); 
         setIsAllTransation(data);
       })
       .catch((error) => {
@@ -37,15 +39,26 @@ const Transation = () => {
       });
   }, []);
 
-  const handleDropdown = (e)=>{
+  async function handleChange(e) {
+    const monthID = e.target.value
 
-    alert(e)
-
+    if (monthID) {
+      try {
+        const data = await fetchApi(`http://localhost:5002/api/v1/transation?month=${monthID}`);
+        setIsAllTransation(data);
+        setCurrentPage(1); 
+      } catch (error) {
+        console.error("Error fetching filtered data", error);
+      }
+    } else {
+      setIsAllTransation(originalTransactions); 
+      setCurrentPage(1); 
+    }
   }
 
   return (
-    <main className="xl:container bg-blue-300 mx-auto p-4">
-      <header className="text-center py-5 bg-slate-400">
+    <main className="xl:container bg-blue-300 mx-auto">
+      <header className="text-center py-5 bg-blue-600 text-2xl font-bold text-white">
         Transation Dashboard
       </header>
 
@@ -58,7 +71,7 @@ const Transation = () => {
           placeholder="search..."
           autoComplete="off"
         />
-        <SelectDropdown handleDropdown={handleDropdown} />
+        <SelectDropdown handleChange={handleChange} />
       </section>
       <br />
       <TableContent

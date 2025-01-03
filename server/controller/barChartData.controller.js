@@ -2,7 +2,8 @@ const transations = require('../models/transation.model')
 
 async function getBarChartDataByMonth(req, res) {
 
-    const { month } = req.body;
+    const { month } = req.query;
+    const monthNumber = parseInt(month, 10);
 
 
     if (!month) {
@@ -18,7 +19,7 @@ async function getBarChartDataByMonth(req, res) {
             },
             {
                 $match: {
-                    month: month,
+                    month: monthNumber,
                 },
             },
         ]);
@@ -31,7 +32,7 @@ async function getBarChartDataByMonth(req, res) {
 
 
         return res.status(200).json({
-            month: month,
+            month: monthNumber,
             transactions: data,
         });
 

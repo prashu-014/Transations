@@ -6,13 +6,13 @@ const Statistics = () => {
     console.log(e);
   };
   return (
-    <div className="xl:container mx-auto h-screen bg-blue-300 p-4 ">
-      <div className="flex  gap-10">
-        <h1 className="text-3xl">Statistics</h1>
+    <div className="xl:container mx-auto h-screen bg-blue-300">
+      <div className="flex  gap-10 bg-blue-600 p-4 ">
+        <h1 className="text-3xl font-bold text-white">Statistics</h1>
         <SelectDropdown handleDropdown={handleDropdown} />
       </div>
 
-      <div className="bg-yellow-300 mt-5 p-4 w-3/12 rounded-xl flex flex-col gap-4">
+      <div className="bg-blue-600 text-white text-xl font-bold mt-5 ms-4 p-4 w-3/12 rounded-xl flex flex-col gap-4">
 
         <h1>Total sale :</h1>
         <h1>Total sold item :</h1>

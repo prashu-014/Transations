@@ -1,12 +1,12 @@
 import React from "react";
 
-const SelectDropdown = ({handleDropdown}) => {
+const SelectDropdown = ({handleChange}) => {
   return (
     <select
       name=""
       id=""
-      className="w-40 p-2"
-      onChange={(e) => handleDropdown(e.target.value)}
+      className="w-40 p-2 focus:outline-none"
+      onChange={(e) => handleChange(e)}
     >
       <option value="">Select Month</option>
       <option value="1">Jan</option>

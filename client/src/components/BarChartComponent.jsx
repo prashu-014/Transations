@@ -10,8 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-const BarChartComponent = () => {
-  // Register the required components for Chart.js
+const BarChartComponent = ({ isBarchartData }) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -21,21 +20,19 @@ const BarChartComponent = () => {
     Legend
   );
 
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-  ]; 
+  const rangeLabels = isBarchartData.map((item) => `${item.min}-${item.max}`);
+
+  const transactionCounts = isBarchartData.map(
+    (item) => item.transactions.length
+  );
+
+  const labels = rangeLabels;
   const data = {
     labels: labels,
     datasets: [
       {
-        label: "My First Dataset",
-        data: [65, 59, 80, 81, 56, 55, 40],
+        label: "",
+        data: transactionCounts,
         backgroundColor: ["rgba(10, 94, 176,0.6)"],
         borderColor: ["rgb(10, 94, 176)"],
         borderWidth: 1,
@@ -51,8 +48,8 @@ const BarChartComponent = () => {
       },
       title: {
         display: true,
-        text: "Bar Chart Example",
-      },
+        text: "Transation Bar chart Statastics",
+      },     
     },
   };
   return <Bar data={data} options={options} />;
